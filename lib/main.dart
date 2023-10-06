@@ -1,62 +1,37 @@
-import 'dart:io';
-
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:subspace/provider/provider.dart';
+import 'presentation/pages/favourites_screen.dart';
+import 'presentation/pages/home_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+void main()  {
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              "",
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value:AppState(),
+        )
+      ],
+      child: MaterialApp(
+        title: 'Subspace',
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          fontFamily: 'Montserrat',
+          // colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 0, 0, 0)),
+          useMaterial3: true,
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: null,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        debugShowCheckedModeBanner: false,
+        home: MyHomePage(),
+        routes: {
+          "/home": (context) => MyHomePage(),
+          FAVOURITES: (context) => FavouritesScreen(),
+        },
       ),
     );
   }
